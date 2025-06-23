@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KS Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main-wrapper">
+        <div class="sidebar">
+            <div class="sidebar-nav">
+                <button id="navEmployees" class="active"><i class="fas fa-users"></i> Employees</button>
+                <button id="navFinances"><i class="fas fa-dollar-sign"></i> Finances</button>
+                <button id="navEmployeeManagement"><i class="fas fa-user-plus"></i> Employee Actions</button>
+                <button id="navAnnouncements"><i class="fas fa-bullhorn"></i> Announcements</button>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div id="employeesSection" class="content-section active">
+                <h2 class="section-title">Current Employees</h2>
+                <div class="card">
+                    <div class="form-inputs-container">
+                        <div class="form-group">
+                            <label for="employeeSearch"><i class="fas fa-search"></i> Search Employee</label>
+                            <input type="text" id="employeeSearch" placeholder="Search by name or ID">
+                        </div>
+                        <div class="form-group">
+                            <label for="employeeSort"><i class="fas fa-sort"></i> Sort By</label>
+                            <select id="employeeSort">
+                                <option value="name_asc">Name (A-Z)</option>
+                                <option value="name_desc">Name (Z-A)</option>
+                                <option value="rank_asc">Rank (Ascending)</option>
+                                <option value="rank_desc">Rank (Descending)</option>
+                                <option value="online_status">Online Status</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="employeeList" class="data-list">
+                        <p class="text-center text-gray-500">Loading employees...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="financesSection" class="content-section">
+                <h2 class="section-title">Society Finances</h2>
+                <div class="card">
+                    <div class="flex justify-between items-center mb-5">
+                        <span class="text-xl font-bold">Current Balance:</span>
+                        <span id="societyBalance" class="text-2xl font-extrabold text-green-400">$0.00</span>
+                    </div>
+                    <div class="form-inputs-container">
+                        <div class="form-group">
+                            <label for="amountDeposit"><i class="fas fa-money-bill-wave"></i> Deposit Amount</label>
+                            <input type="number" id="amountDeposit" placeholder="e.g., 1000">
+                            <button id="depositBtn" class="btn-primary w-full mt-3"><i class="fas fa-plus"></i> Deposit</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="amountWithdraw"><i class="fas fa-money-bill-wave"></i> Withdraw Amount</label>
+                            <input type="number" id="amountWithdraw" placeholder="e.g., 500">
+                            <button id="withdrawBtn" class="btn-danger w-full mt-3"><i class="fas fa-minus"></i> Withdraw</button>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="section-title mt-8">Transaction History</h2>
+                <div class="card">
+                    <div class="form-inputs-container">
+                        <div class="form-group">
+                            <label for="transactionSearch"><i class="fas fa-search"></i> Search Transactions</label>
+                            <input type="text" id="transactionSearch" placeholder="Search by type, initiator, reason">
+                        </div>
+                        <div class="form-group">
+                            <label for="transactionSort"><i class="fas fa-sort"></i> Sort By</label>
+                            <select id="transactionSort">
+                                <option value="date_desc">Date (Newest First)</option>
+                                <option value="date_asc">Date (Oldest First)</option>
+                                <option value="amount_desc">Amount (Highest First)</option>
+                                <option value="amount_asc">Amount (Lowest First)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="transactionHistoryList" class="data-list">
+                        <p class="text-center text-gray-500">Loading transaction history...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="employeeManagementSection" class="content-section">
+                <h2 class="section-title">Hire Employee</h2>
+                <div class="card">
+                    <div class="form-inputs-container">
+                        <div class="form-group">
+                            <label for="hirePlayerId"><i class="fas fa-user-plus"></i> Select Player to Hire</label>
+                            <select id="hirePlayerId">
+                                <option value="">Loading nearby players...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="hireRank"><i class="fas fa-medal"></i> Select Initial Rank</label>
+                            <select id="hireRank">
+                                <option value="">Loading ranks...</option>
+                            </select>
+                        </div>
+                        <button id="hireEmployeeBtn" class="btn-primary w-full mt-3"><i class="fas fa-user-plus"></i> Hire Employee</button>
+                    </div>
+                </div>
+
+                <h2 class="section-title mt-8">Manage Existing Employee & Pay Bonus</h2>
+                <div class="card">
+                    <div class="form-inputs-container">
+                        <div class="form-group">
+                            <label><i class="fas fa-users"></i> Select Employee for Actions</label>
+                            <div id="employeeActionList" class="data-list clickable-list">
+                                <p class="text-center text-gray-500">Loading employees...</p>
+                            </div>
+                        </div>
+                        
+                        <div id="employeeActionsContainer" class="hidden-by-js">
+                            <div class="button-group mt-5">
+                                <button id="promoteEmployeeBtn" class="btn-secondary" disabled><i class="fas fa-arrow-up"></i> Promote</button>
+                                <button id="demoteEmployeeBtn" class="btn-secondary" disabled><i class="fas fa-arrow-down"></i> Demote</button>
+                                <button id="fireEmployeeBtn" class="btn-danger" disabled><i class="fas fa-user-minus"></i> Fire</button>
+                            </div>
+
+                            <div class="form-group mt-5">
+
+                            </div>
+                            <div class="button-group">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="announcementsSection" class="content-section">
+                <h2 class="section-title">Send Announcement</h2>
+                <div class="card">
+                    <div class="form-group">
+                        <label for="announcementMessage"><i class="fas fa-comment-alt"></i> Message</label>
+                        <textarea id="announcementMessage" rows="5" placeholder="Type your announcement message here..."></textarea>
+                    </div>
+                    <button id="sendAnnouncementBtn" class="btn-primary w-full mt-3"><i class="fas fa-paper-plane"></i> Send Announcement</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="notificationContainer"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
